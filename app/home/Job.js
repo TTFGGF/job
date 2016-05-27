@@ -8,14 +8,17 @@ import React, {
   View,
   ListView,
   ToolbarAndroid,
+  TouchableHighlight,
 } from 'react-native';
+
+var JobDetail = require('./JobDetail');
 
 var Job = React.createClass({
 
   getInitialState:function(){
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      dataSource: ds.cloneWithRows(['row 1']),
+      dataSource: ds.cloneWithRows(['row 1','row 1','row 1','row 1','row 1','row 1','row 1','row 1','row 1']),
     };
   },
 
@@ -32,21 +35,59 @@ var Job = React.createClass({
         <ListView
         dataSource={this.state.dataSource}
         renderRow={(rowData) =>
-          <View style={styles.jobItem}>
-            <View style={styles.roundLayout}>
-              <Text style={styles.roundLayoutText}>兼职</Text>
+          <TouchableHighlight onPress={() => this._pressRow()}>
+            <View style={styles.jobItem}>
+              <View style={styles.roundLayout}>
+                <Text style={styles.roundLayoutText}>兼职</Text>
+              </View>
+              <View style={{flexDirection:'column'}}>
+                <Text style={{marginLeft:10,fontSize:14}}>找聘兼职人员</Text>
+                <Text style={{marginLeft:10,fontSize:14}}>余杭 5月1日起（共30天）</Text>
+                <Text style={{marginLeft:10,fontSize:14}}>2016-05-25 14:15:57</Text>
+              </View>
             </View>
-            <View style={{flexDirection:'column'}}>
-              <Text style={{marginLeft:10,fontSize:14}}>找聘兼职人员</Text>
-              <Text style={{marginLeft:10,fontSize:14}}>余杭 5月1日起（共30天）</Text>
-              <Text style={{marginLeft:10,fontSize:14}}>2016-05-25 14:15:57</Text>
-            </View>
-          </View>
+          </TouchableHighlight>
           }
         />
       </View>
     );
   },
+
+  _pressRow: function() {
+      this.props.navigator.push({name: 'JobDetail'});
+  },
+
+});
+
+var Main = React.createClass({
+  configureScene(route){
+    return Navigator.SceneConfigs.FadeAndroid;
+  },
+
+  renderScene(router, navigator){
+    var Component = null;
+
+    this._navigator = navigator;
+    switch(router.name){
+      case "Main":
+        Component = Job;
+        break;
+      case 'JobDetail':
+        Component = JobDetail;
+        break;
+    }
+
+    return <Component navigator={navigator} />
+  },
+
+  render() {
+      return (
+          <Navigator
+              initialRoute={{name: 'Main'}}
+              configureScene={this.configureScene}
+              renderScene={this.renderScene} />
+      );
+  }
 
 });
 
@@ -86,4 +127,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Job;
+module.exports = Main;
