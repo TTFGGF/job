@@ -9,7 +9,14 @@ import React, {
   TouchableHighlight,
 } from 'react-native';
 
+var _navigator;
+
 var JobDetail = React.createClass({
+
+  renderScene(router, navigator){
+      _navigator = navigator;
+  },
+
   render(){
     return(
         <View>
@@ -19,11 +26,50 @@ var JobDetail = React.createClass({
             title="职位详情"
             titleColor='white'
             backgroundColor='#009688'
+            onIconClicked = {
+              () =>{
+                this.goBack();
+              }
+            }
           />
         </View>
     );
   },
+
+  goBack(){
+    // if(_navigator) {
+      _navigator.pop();
+    // }
+  },
+
 });
+
+// var Main = React.createClass({
+//
+//   configureScene(route){
+//     return Navigator.SceneConfigs.FadeAndroid;
+//   },
+//
+//   renderScene(router, navigator){
+//     var Component = null;
+//     this._navigator = navigator;
+//     switch(router.name){
+//       case 'JobDetail':
+//         Component = JobDetail;
+//         break;
+//     }
+//     return <Component navigator={navigator} />
+//   },
+//
+//   render(){
+//     return(
+//       <Navigator
+//           initialRoute={{name: 'JobDetail'}}
+//           configureScene={this.configureScene}
+//           renderScene={this.renderScene} />
+//     );
+//   },
+// });
 
 var styles = StyleSheet.create({
 
