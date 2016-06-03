@@ -13,14 +13,22 @@ import React, {
 
 var JobDetail = require('./JobDetail');
 
-var Job = React.createClass({
+class Job extends React.Component{
 
-  getInitialState:function(){
+  constructor(props) {
+    super(props);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
+    this.state = {
       dataSource: ds.cloneWithRows(['row 1','row 1','row 1','row 1','row 1','row 1','row 1','row 1','row 1']),
     };
-  },
+  }
+
+  // getInitialState:function(){
+  //   var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+  //   return {
+  //     dataSource: ds.cloneWithRows(['row 1','row 1','row 1','row 1','row 1','row 1','row 1','row 1','row 1']),
+  //   };
+  // }
 
   render() {
     return (
@@ -51,45 +59,45 @@ var Job = React.createClass({
         />
       </View>
     );
-  },
-
-  _pressRow: function() {
-      this.props.navigator.push({name: 'JobDetail'});
-  },
-
-});
-
-var Main = React.createClass({
-  configureScene(route){
-    return Navigator.SceneConfigs.FadeAndroid;
-  },
-
-  renderScene(router, navigator){
-    var Component = null;
-
-    this._navigator = navigator;
-    switch(router.name){
-      case "Main":
-        Component = Job;
-        break;
-      case 'JobDetail':
-        Component = JobDetail;
-        break;
-    }
-
-    return <Component navigator={navigator} />
-  },
-
-  render() {
-      return (
-          <Navigator
-              initialRoute={{name: 'Main'}}
-              configureScene={this.configureScene}
-              renderScene={this.renderScene} />
-      );
   }
 
-});
+  // _pressRow() {
+  //     //this.props.navigator.push({name: 'JobDetail'});
+  // }
+
+};
+
+// var Main = React.createClass({
+//   configureScene(route){
+//     return Navigator.SceneConfigs.FadeAndroid;
+//   },
+//
+//   renderScene(router, navigator){
+//     var Component = null;
+//
+//     this._navigator = navigator;
+//     switch(router.name){
+//       case "Main":
+//         Component = Job;
+//         break;
+//       case 'JobDetail':
+//         Component = JobDetail;
+//         break;
+//     }
+//
+//     return <Component navigator={navigator} />
+//   },
+//
+//   render() {
+//       return (
+//           <Navigator
+//               initialRoute={{name: 'Main'}}
+//               configureScene={this.configureScene}
+//               renderScene={this.renderScene} />
+//       );
+//   }
+//
+// });
 
 var styles = StyleSheet.create({
 
@@ -127,4 +135,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Main;
+module.exports = Job;
