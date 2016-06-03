@@ -1,6 +1,7 @@
 import React, {
   Component,
   Navigator,
+  Platform,
 } from 'react-native';
 
 var Job = require('./Job');
@@ -36,5 +37,6 @@ var NavigatorComponent = React.createClass ({
   }
 
 });
+
 
 module.exports = NavigatorComponent;
